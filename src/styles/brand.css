@@ -21,3 +21,59 @@
 .sidebar-inner > nav > ul > li > a[aria-current="page"],
 .sidebar-inner > nav > ul > li > a:hover { color: var(--brand); }
 :where(prose-content) a:hover { text-decoration-color: var(--brand); }
+
+/* Full-viewport Topography on the homepage.
+   Astro renders React islands inside an <astro-island> host; the host must
+   fill the viewport too, otherwise the canvas falls back to its intrinsic height. */
+body.home-page > .home-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--brand-topography);
+  opacity: 0.42;
+}
+.home-background > astro-island,
+.home-background [data-slot="topography-background"],
+.home-background .topography-layer {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.home-background .topography-layer {
+  pointer-events: none;
+}
+body.home-page > page-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Restrained scrollbar for both color schemes. */
+html::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+html::-webkit-scrollbar-track,
+html::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+html::-webkit-scrollbar-thumb {
+  background: var(--gray-8);
+  border: 3px solid var(--background);
+  border-radius: 999px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-10);
+}
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gray-8) var(--background);
+  }
+}
