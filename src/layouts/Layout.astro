@@ -19,18 +19,23 @@ import "@/styles/shape.css"
 import Footer from "@/components/Footer.astro"
 import MetaHead from "@/components/MetaHead.astro"
 import Sidebar from "@/components/Sidebar.astro"
+import { TopographyBackground } from "@/components/TopographyBackground"
 import { SITE } from "@/consts"
 
 type Props = { crumbs?: { label: string; href: string }[] }
 
 const { crumbs } = Astro.props
+const isHome = Astro.url.pathname === "/"
 ---
 
 <html lang={SITE.locale} dir={SITE.dir}>
   <MetaHead>
     <slot name="head" />
   </MetaHead>
-  <body>
+  <body class:list={[isHome && "home-page"]}>
+    {isHome && (
+      <TopographyBackground client:load className="site-topography" globalInteraction levels={13} speed={0.26} scale={1.3} peak={0.7} />
+    )}
     <page-grid>
       <page-header>
         <page-nav>
@@ -51,6 +56,33 @@ const { crumbs } = Astro.props
 </html>
 
 <style>
+  /* Keep the background in the viewport as the home page scrolls.
+     The canvas sits behind the complete grid, not just the introduction. */
+  :global(body.home-page > .site-topography) {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    color: var(--brand-topography);
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  :global(body.home-page > .site-topography canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  :global(body.home-page > page-grid) {
+    z-index: 1;
+  }
+
   page-grid {
     position: relative;
     isolation: isolate;
