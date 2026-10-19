@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config"
 import sitemap from "@astrojs/sitemap"
+import react from "@astrojs/react"
 import { satteri } from "@astrojs/markdown-satteri"
 import {
   blockExpressiveCode,
@@ -12,10 +13,11 @@ import { headingNamespace } from "./src/lib/heading-namespace"
 import { headingAnchors } from "./src/lib/heading-anchors"
 
 export default defineConfig({
-  site: "https://astro-erudite.vercel.app",
+  site: process.env.SITE_URL || "https://tntkien.workers.dev",
   compressHTML: true,
   prefetch: { prefetchAll: true },
   integrations: [
+    react(),
     sitemap({
       filter: (page) =>
         !/\/blog\/[^/]+\/[^/]+\/?$/.test(page) &&

@@ -1,0 +1,17 @@
+/* Keep astro-erudite's text-first list UI; Base UI only adds state & keyboard interaction. */
+.project-filter-tabs { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-bottom: var(--space-m); }
+.project-filter-tab { appearance: none; border: 0; border-bottom: 1px solid transparent; background: none; color: var(--muted-foreground); font-size: var(--step--1); padding: 0 0 .15rem; cursor: pointer; }
+.project-filter-tab:hover, .project-filter-tab[data-active] { color: var(--foreground); }
+.project-filter-tab[data-active] { border-bottom-color: var(--brand); }
+.filter-count { font-size: .75em; opacity: .7; margin-left: .2rem; }
+.project-filter-panel:focus-visible { outline: none; }
+.filtered-projects { list-style: none; display: flex; flex-direction: column; gap: var(--space-l); }
+.filtered-projects li { min-width: 0; }
+.project-title { font-size: var(--step-1); line-height: calc(var(--leading-offset) + 1em); color: var(--foreground); font-weight: var(--font-weight-medium); }
+.project-title:hover { text-decoration: underline; }
+.project-links { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-3xs); }
+.project-links a { font-size: var(--step--1); color: var(--brand); }
+.project-links a:hover { text-decoration: underline; }
+.project-info p { margin-top: var(--space-2xs); color: var(--muted-foreground); font-size: var(--step-0); }
+.project-tags { display: flex; flex-wrap: wrap; gap: var(--space-3xs); margin-top: var(--space-2xs); }
+.project-tags span { padding: .12rem .48rem; background: color-mix(in oklab, var(--muted) 55%, transparent); border-radius: 100px; color: var(--muted-foreground); font-size: var(--step--1); }

@@ -1,0 +1,24 @@
+/* Brand accents over astro-erudite's native light/dark palette. */
+:root {
+  --gray-1: light-dark(#fbfcfa, #101712);
+  --gray-2: light-dark(#f8faf7, #16201a);
+  --gray-3: light-dark(#edf3ee, #1d2921);
+  --gray-4: light-dark(#e5ece5, #27342b);
+  --gray-5: light-dark(#dce5de, #304036);
+  --gray-6: light-dark(#d4ded6, #3b4c40);
+  --gray-7: light-dark(#c5d2c8, #4c5d50);
+  --gray-8: light-dark(#aab9ae, #687b6b);
+  --gray-9: light-dark(#84938a, #798b7e);
+  --gray-10: light-dark(#738176, #899d8d);
+  --gray-11: light-dark(#596b60, #abbeb0);
+  --gray-12: light-dark(#1d2921, #f0f7f0);
+  --brand: light-dark(#168376, #77c4a7);
+  --brand-muted: light-dark(#e1f3ec, #1d392d);
+  --brand-topography: light-dark(#779b8d, #4d745e);
+}
+:where(a):focus-visible, :where(button):focus-visible { outline-color: var(--brand); }
+.sidebar-inner > a { color: var(--foreground); }
+.sidebar-inner > a svg { display: block; }
+.sidebar-inner > nav > ul > li > a[aria-current="page"],
+.sidebar-inner > nav > ul > li > a:hover { color: var(--brand); }
+:where(prose-content) a:hover { text-decoration-color: var(--brand); }

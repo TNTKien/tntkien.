@@ -1,5 +1,5 @@
 ---
-import Logo from "@/assets/logo.svg"
+import Wordmark from "@/assets/wordmark.svg"
 import ThemeToggle from "@/components/ThemeToggle.astro"
 import { NAVIGATION, SITE } from "@/consts"
 import { normalizePath } from "@/lib/utils"
@@ -16,8 +16,7 @@ const section = NAVIGATION.find(
 <aside data-bar>
   <sidebar-inner>
     <a href="/" aria-label={SITE.title}>
-      <Logo />
-      <span>{SITE.title}</span>
+      <Wordmark />
     </a>
     <nav>
       <ul>
@@ -101,15 +100,13 @@ const section = NAVIGATION.find(
       text-decoration-line: none;
 
       svg {
-        inline-size: 1.125rem;
-        block-size: 1.125rem;
+        inline-size: 8.5rem;
+        block-size: auto;
         flex-shrink: 0;
       }
 
       @media (width < 26rem) {
-        span {
-          display: none;
-        }
+        svg { inline-size: 6.9rem; }
       }
     }
 
