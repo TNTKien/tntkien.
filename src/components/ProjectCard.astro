@@ -1,4 +1,5 @@
 ---
+import ExternalIcon from "@/assets/icons/external.svg"
 import { formatDate } from "@/lib/utils"
 import { Image } from "astro:assets"
 import type { CollectionEntry } from "astro:content"
@@ -41,6 +42,7 @@ const { name, description, link, tags, image, startDate, endDate } =
           </project-dates>
         )}
       <project-link>
+        <ExternalIcon aria-hidden="true" />
         {new URL(link).hostname}
       </project-link>
     </entry-meta>
@@ -102,6 +104,10 @@ const { name, description, link, tags, image, startDate, endDate } =
           gap: var(--space-3xs);
           color: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
 
+          svg {
+            inline-size: 1em;
+            block-size: 1em;
+          }
         }
 
         project-dates ~ project-link::before {
