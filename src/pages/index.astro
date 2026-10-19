@@ -3,7 +3,6 @@ import MetaPage from "@/components/MetaPage.astro"
 import Layout from "@/layouts/Layout.astro"
 import BlogCard from "@/components/BlogCard.astro"
 import ProjectCard from "@/components/ProjectCard.astro"
-import { TopographyBackground } from "@/components/TopographyBackground"
 import { getCollection } from "astro:content"
 import { getPosts } from "@/lib/content"
 
@@ -16,8 +15,6 @@ const recentPosts = (await getPosts()).slice(0, 2)
 <Layout>
   <MetaPage slot="head" title="Home" />
   <section class="home-hero" aria-label="Introduction">
-    <TopographyBackground client:load className="home-topography" levels={13} speed={0.26} scale={1.3} peak={0.7} />
-    <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-body">
       <h1>Hi, I'm Kien.</h1>
       <p class="hero-role">Full-stack developer · Building for the web</p>
@@ -48,44 +45,16 @@ const recentPosts = (await getPosts()).slice(0, 2)
 <style>
   .home-hero {
     position: relative;
-    isolation: isolate;
     min-height: 20rem;
     display: flex;
     align-items: center;
     margin-block: calc(-1 * var(--space-s)) var(--space-xl);
-    overflow: hidden;
-  }
-  :global(.home-topography) {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    color: var(--brand-topography);
-    overflow: hidden;
-  }
-  :global(.home-topography canvas) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-  .hero-shade {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(90deg, var(--background) 0%, color-mix(in oklab, var(--background) 94%, transparent) 48%, color-mix(in oklab, var(--background) 48%, transparent) 100%);
   }
   .hero-body {
     position: relative;
-    z-index: 2;
     padding-block: var(--space-xl) var(--space-l);
-    pointer-events: none;
     width: 100%;
   }
-  .hero-body a { pointer-events: auto; }
   h1 {
     font-size: var(--step-3);
     font-weight: var(--font-weight-medium);

@@ -499,6 +499,7 @@ type TopographyBackgroundProps = React.ComponentProps<'div'> & {
   scale?: number;
   peak?: number;
   interactive?: boolean;
+  globalInteraction?: boolean;
   transition?: SpringOptions;
 };
 
@@ -510,6 +511,7 @@ function TopographyBackgroundContent({
   scale = 1,
   peak = 1,
   interactive = true,
+  globalInteraction = false,
   transition = { stiffness: 120, damping: 20 },
   className,
   children,
@@ -887,6 +889,48 @@ function TopographyBackgroundContent({
     frame.render(tick, true);
     return () => cancelFrame(tick);
   }, [playing]);
+
+  // A full-page background should not intercept links or text selection.
+  // Track pointer events on the window instead of relying on canvas hit-testing.
+  React.useEffect(() => {
+    if (!globalInteraction || reduce) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const position = (event: PointerEvent) => {
+      const rect = container.getBoundingClientRect();
+      return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    };
+    const track = (event: PointerEvent) => {
+      const { x, y } = position(event);
+      pointerX.set(x);
+      pointerY.set(y);
+      raised.set(1);
+    };
+    const ripple = (event: PointerEvent) => {
+      if (event.button !== 0) return;
+      track(event);
+      const { x, y } = position(event);
+      const item: Ripple = { x, y, progress: motionValue(0) };
+      ripplesRef.current = [...ripplesRef.current.slice(-3), item];
+      animate(item.progress, 1, {
+        duration: 2.6,
+        ease: [0.25, 0.4, 0.45, 1],
+      }).then(() => {
+        ripplesRef.current = ripplesRef.current.filter((r) => r !== item);
+      });
+    };
+    const leave = () => raised.set(0);
+
+    window.addEventListener('pointermove', track, { passive: true });
+    window.addEventListener('pointerdown', ripple, { passive: true });
+    window.addEventListener('blur', leave);
+    return () => {
+      window.removeEventListener('pointermove', track);
+      window.removeEventListener('pointerdown', ripple);
+      window.removeEventListener('blur', leave);
+    };
+  }, [globalInteraction, reduce, pointerX, pointerY, raised]);
 
   const point = (event: React.PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
