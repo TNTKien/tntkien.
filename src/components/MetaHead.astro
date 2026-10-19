@@ -22,16 +22,7 @@ import { SITE } from "@/consts"
     content="telephone=no,date=no,address=no,email=no,url=no"
   >
 
-  <meta
-    name="theme-color"
-    content="#0a0a0a"
-    media="(prefers-color-scheme: dark)"
-  >
-  <meta
-    name="theme-color"
-    content="#fafafa"
-    media="(prefers-color-scheme: light)"
-  >
+  <meta name="theme-color" content="#101712">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
@@ -53,9 +44,16 @@ import { SITE } from "@/consts"
   >
 
   <script is:inline>
-    const theme = localStorage.theme
-    if (theme === "light" || theme === "dark")
-      document.documentElement.dataset.theme = theme
+    // Default to dark unless the visitor previously selected light.
+    let theme = "dark"
+    try {
+      if (localStorage.getItem("theme") === "light") theme = "light"
+    } catch {}
+    document.documentElement.dataset.theme = theme
+    document.querySelector('meta[name="theme-color"]')?.setAttribute(
+      "content",
+      theme === "dark" ? "#101712" : "#fbfcfa",
+    )
   </script>
 
   <slot />
