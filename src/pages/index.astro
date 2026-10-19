@@ -45,14 +45,10 @@ const recentPosts = (await getPosts()).slice(0, 2)
 <style>
   .home-hero {
     position: relative;
-    min-height: 20rem;
-    display: flex;
-    align-items: center;
-    margin-block: calc(-1 * var(--space-s)) var(--space-xl);
+    margin-block-end: var(--space-xl);
   }
   .hero-body {
     position: relative;
-    padding-block: var(--space-xl) var(--space-l);
     width: 100%;
   }
   h1 {
@@ -90,8 +86,4 @@ const recentPosts = (await getPosts()).slice(0, 2)
   .section-header a:hover { text-decoration: underline; }
   .section-items { display: flex; flex-direction: column; gap: var(--space-m); }
   .no-posts { color: var(--muted-foreground); }
-  @media (width < 40rem) {
-    .home-hero { min-height: 18rem; }
-    .hero-body { padding-block: var(--space-m); }
-  }
 </style>
