@@ -34,7 +34,9 @@ const isHome = Astro.url.pathname === "/"
   </MetaHead>
   <body class:list={[isHome && "home-page"]}>
     {isHome && (
-      <TopographyBackground client:load className="site-topography" globalInteraction levels={13} speed={0.26} scale={1.3} peak={0.7} />
+      <div class="home-background" aria-hidden="true">
+        <TopographyBackground client:load className="site-topography" globalInteraction levels={13} speed={0.26} scale={1.3} peak={0.7} />
+      </div>
     )}
     <page-grid>
       <page-header>
@@ -56,33 +58,6 @@ const isHome = Astro.url.pathname === "/"
 </html>
 
 <style>
-  /* Keep the background in the viewport as the home page scrolls.
-     The canvas sits behind the complete grid, not just the introduction. */
-  :global(body.home-page > .site-topography) {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-    color: var(--brand-topography);
-    opacity: 0.45;
-    pointer-events: none;
-  }
-
-  :global(body.home-page > .site-topography canvas) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-
-  :global(body.home-page > page-grid) {
-    z-index: 1;
-  }
-
   page-grid {
     position: relative;
     isolation: isolate;
