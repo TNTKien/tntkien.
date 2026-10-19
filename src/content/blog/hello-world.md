@@ -3,7 +3,7 @@ title: "Hello World"
 description: "A quick tour of this blog: Markdown, code snippets, navigation, themes, and publishing straight from GitHub."
 date: 2026-10-19
 tags: ["Announcements", "Blog"]
-authors: ["kien"]
+authors: ["tntkien"]
 draft: false
 ---
 
