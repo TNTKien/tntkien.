@@ -1,108 +1,128 @@
 ---
 import MetaPage from "@/components/MetaPage.astro"
 import Layout from "@/layouts/Layout.astro"
----
+import BlogCard from "@/components/BlogCard.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import { TopographyBackground } from "@/components/TopographyBackground"
+import { getCollection } from "astro:content"
+import { getPosts } from "@/lib/content"
 
+const projects = (await getCollection("projects"))
+  .filter((entry) => entry.data.featured)
+  .sort((a,b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .slice(0, 3)
+const recentPosts = (await getPosts()).slice(0, 2)
+---
 <Layout>
-  <MetaPage slot="head" />
-  <dictionary-entry>
-    <h1>er·u·dite</h1>
-    <etymology-span>
-      <ipa-span>/ˈer(y)əˌdīt/</ipa-span>
-      adj. [L. <i>ēruditus</i>, instructed, pp. of <i>ērudīre</i> to instruct,
-      polish, lit. to free from roughness, f. ē- out + <i>rudis</i> rough,
-      untrained]
-    </etymology-span>
-    <ol>
-      <li>
-        having or showing deep, wide-ranging knowledge acquired through study;
-        learned (<i>an erudite scholar</i>).
-      </li>
-      <li>
-        (of writing, speech, or argument) reflecting such knowledge; scholarly (<i
-          >an erudite footnote</i
-        >).
-      </li>
-    </ol>
-    <hr>
-    <prose-content>
-      <p>
-        astro-erudite is
-        <a href="https://enscribe.dev" target="_blank" rel="noopener noreferrer"
-          >enscribe</a
-        >'s opinionated, unstyled static blogging template built with
-        <a href="https://astro.build" target="_blank" rel="noopener noreferrer"
-          >Astro</a
-        >
-        and native CSS. astro-erudite uses no UI or CSS framework and contains
-        minimal dependencies.
-      </p>
-      <p>
-        To use this template, check out the
-        <a
-          href="https://github.com/jktrn/astro-erudite"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-        repository. To learn more about why this template exists, read this blog
-        post: <a href="/blog/introducing-v2">Introducing astro-erudite v2</a>.
-      </p>
-    </prose-content>
-  </dictionary-entry>
+  <MetaPage slot="head" title="Home" />
+  <section class="home-hero" aria-label="Introduction">
+    <TopographyBackground client:load className="home-topography" levels={13} speed={0.26} scale={1.3} peak={0.7} />
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-body">
+      <h1>Hi, I'm Kien.</h1>
+      <p class="hero-role">Full-stack developer · Building for the web</p>
+      <prose-content>
+        <p>I build web applications, APIs, and the infrastructure behind them. This is my small corner of the internet for <a href="/projects">projects</a> and <a href="/blog">notes</a>.</p>
+        <p>I enjoy working on the details — from how an interface feels to how a service behaves in production.</p>
+      </prose-content>
+      <div class="hero-links">
+        <a href="/projects">Projects <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/TNTKien" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="home-section" aria-labelledby="featured-title">
+    <div class="section-header"><h2 id="featured-title">Selected projects</h2><a href="/projects">View all ↗</a></div>
+    <ul class="section-items">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </ul>
+  </section>
+  <section class="home-section" aria-labelledby="writing-title">
+    <div class="section-header"><h2 id="writing-title">Recent writing</h2><a href="/blog">All posts ↗</a></div>
+    {recentPosts.length ? (
+      <ul class="section-items">{recentPosts.map((post) => <BlogCard post={post}/>)}</ul>
+    ) : <p class="no-posts">No notes published yet.</p>}
+  </section>
 </Layout>
 
 <style>
-  dictionary-entry {
-    display: block;
-    font-size: var(--step-0);
-    color: var(--muted-foreground);
-
-    @media (width >= 64rem) {
-      margin-block-start: -0.2em;
-    }
-
-    ipa-span {
-      opacity: 0.6;
-    }
-
-    h1 {
-      font-size: var(--step-2);
-      line-height: calc(var(--leading-offset) + 1em);
-      font-weight: var(--font-weight-medium);
-      color: var(--foreground);
-      margin-block-end: var(--space-2xs);
-    }
-
-    ol {
-      margin-block-start: var(--space-xs);
-      list-style: none;
-
-      li {
-        padding-inline-start: 1em;
-        text-indent: -1em;
-
-        &::before {
-          content: counter(list-item);
-          display: inline-block;
-          inline-size: 1em;
-          text-indent: 0;
-          font-weight: var(--font-weight-medium);
-        }
-
-        + li {
-          margin-block-start: var(--space-3xs);
-        }
-      }
-    }
-
-    hr {
-      margin-block: var(--space-m);
-      border-block-start: 2px solid var(--border);
-    }
-
-    prose-content {
-      margin-block-start: var(--space-xs);
-    }
+  .home-hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 20rem;
+    display: flex;
+    align-items: center;
+    margin-block: calc(-1 * var(--space-s)) var(--space-xl);
+    overflow: hidden;
+  }
+  :global(.home-topography) {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--brand-topography);
+    overflow: hidden;
+  }
+  :global(.home-topography canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .hero-shade {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--background) 0%, color-mix(in oklab, var(--background) 94%, transparent) 48%, color-mix(in oklab, var(--background) 48%, transparent) 100%);
+  }
+  .hero-body {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--space-xl) var(--space-l);
+    pointer-events: none;
+    width: 100%;
+  }
+  .hero-body a { pointer-events: auto; }
+  h1 {
+    font-size: var(--step-3);
+    font-weight: var(--font-weight-medium);
+    line-height: calc(var(--leading-offset) + 1em);
+  }
+  .hero-role {
+    color: var(--brand);
+    font-size: var(--step--1);
+    margin-block: var(--space-3xs) var(--space-m);
+  }
+  .hero-body prose-content {
+    max-width: 34rem;
+  }
+  .hero-body prose-content p + p { margin-top: var(--space-2xs); }
+  .hero-links {
+    display: flex;
+    gap: var(--space-m);
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+  }
+  .hero-links a { color: var(--brand); }
+  .hero-links a:hover { text-decoration: underline; }
+  .home-section + .home-section { margin-block-start: var(--space-xl); }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    align-items: baseline;
+    margin-bottom: var(--space-m);
+  }
+  .section-header h2 { font-size: var(--step-2); font-weight: var(--font-weight-medium); }
+  .section-header a { font-size: var(--step--1); color: var(--brand); }
+  .section-header a:hover { text-decoration: underline; }
+  .section-items { display: flex; flex-direction: column; gap: var(--space-m); }
+  .no-posts { color: var(--muted-foreground); }
+  @media (width < 40rem) {
+    .home-hero { min-height: 18rem; }
+    .hero-body { padding-block: var(--space-m); }
   }
 </style>

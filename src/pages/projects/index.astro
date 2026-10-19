@@ -1,26 +1,32 @@
 ---
 import MetaPage from "@/components/MetaPage.astro"
-import ProjectCard from "@/components/ProjectCard.astro"
 import Layout from "@/layouts/Layout.astro"
+import ProjectFilters from "@/components/ProjectFilters"
 import { getCollection } from "astro:content"
+import "@/styles/project-filters.css"
 
-const projects = (await getCollection("projects")).sort(
-  (a, b) =>
-    (b.data.startDate?.getTime() ?? 0) - (a.data.startDate?.getTime() ?? 0),
-)
+const entries = (await getCollection("projects"))
+  .sort((a,b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+const projects = entries.map(({ id, data }) => ({
+  id,
+  name: data.name,
+  description: data.description,
+  link: data.link,
+  github: data.github,
+  category: data.category,
+  tags: data.tags,
+}))
 ---
-
 <Layout>
-  <MetaPage slot="head" title="Projects" />
-  <ul>
-    {projects.map((project) => <ProjectCard project={project} />)}
-  </ul>
+  <MetaPage slot="head" title="Projects" description="A curated list of apps, APIs, and side projects I've built." />
+  <header class="page-header">
+    <h1>Projects</h1>
+    <p>A few things I've built and kept working on.</p>
+  </header>
+  <ProjectFilters projects={projects} client:idle />
 </Layout>
-
 <style>
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-m);
-  }
+  .page-header { margin-bottom: var(--space-l); }
+  .page-header h1 { font-size: var(--step-3); font-weight: var(--font-weight-medium); }
+  .page-header p { color: var(--muted-foreground); font-size: var(--step-0); }
 </style>
