@@ -73,17 +73,11 @@ Notice the **“On this page”** section above the article? It's generated from
 
 Use the theme toggle in the navigation bar to switch between light and dark mode. The selection is remembered in your browser, and the default follows your system preference.
 
-### Less noise
-
-The homepage has an interactive [Topography background](https://animate-ui.com/docs/backgrounds/topography) from Animate UI. Article pages intentionally don't. They keep a plain background, readable typography, and enough room for code and diagrams.
-
-The layout also adapts to smaller screens.
-
 ## Finding your way around
 
 The site has two main sections beyond the homepage:
 
-- [Projects](/projects/) — a curated collection of applications, APIs, and tools I've built. Categories can be filtered using animated tabs powered by Animate UI and Base UI.
+- [Projects](/projects/) — a curated collection of applications, APIs, and tools I've built.
 - [Blog](/blog/) — notes arranged by publication date, with tags for related topics.
 
 You can follow new posts via [RSS](/rss.xml). There's also a generated sitemap to help search engines discover the pages.
