@@ -1,5 +1,6 @@
 // Source: https://github.com/imskyleen/animate-ui/blob/main/apps/v2/registry/backgrounds/topography/index.tsx
-// Adapted for Astro islands and framework-free styling; see THIRD_PARTY_NOTICES.md.
+// Adapted for Astro islands and framework-free styling.
+// Copyright (c) 2025 Elliot Sutton. MIT + Commons Clause; see LICENSE (Animate UI section).
 'use client';
 
 import * as React from 'react';
