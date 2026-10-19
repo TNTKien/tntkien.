@@ -18,7 +18,6 @@
 }
 :where(a):focus-visible, :where(button):focus-visible { outline-color: var(--brand); }
 .sidebar-inner > a { color: var(--foreground); }
-.sidebar-inner > a svg { display: block; }
 .sidebar-inner > nav > ul > li > a[aria-current="page"],
 .sidebar-inner > nav > ul > li > a:hover { color: var(--brand); }
 :where(prose-content) a:hover { text-decoration-color: var(--brand); }
