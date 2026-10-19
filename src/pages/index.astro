@@ -26,19 +26,19 @@ const recentPosts = (await getPosts()).slice(0, 2)
         <p>I enjoy working on the details — from how an interface feels to how a service behaves in production.</p>
       </prose-content>
       <div class="hero-links">
-        <a href="/projects">Projects <span aria-hidden="true">↗</span></a>
-        <a href="https://github.com/TNTKien" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="/projects">Projects</a>
+        <a href="https://github.com/TNTKien" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
   </section>
   <section class="home-section" aria-labelledby="featured-title">
-    <div class="section-header"><h2 id="featured-title">Selected projects</h2><a href="/projects">View all ↗</a></div>
+    <div class="section-header"><h2 id="featured-title">Recent projects</h2><a href="/projects">View all</a></div>
     <ul class="section-items">
       {projects.map((project) => <ProjectCard project={project} />)}
     </ul>
   </section>
   <section class="home-section" aria-labelledby="writing-title">
-    <div class="section-header"><h2 id="writing-title">Recent writing</h2><a href="/blog">All posts ↗</a></div>
+    <div class="section-header"><h2 id="writing-title">Recent writing</h2><a href="/blog">All posts</a></div>
     {recentPosts.length ? (
       <ul class="section-items">{recentPosts.map((post) => <BlogCard post={post}/>)}</ul>
     ) : <p class="no-posts">No notes published yet.</p>}

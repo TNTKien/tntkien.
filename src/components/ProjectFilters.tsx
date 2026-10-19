@@ -33,10 +33,10 @@ export default function ProjectFilters({ projects }: { projects: Project[] }) {
             {projects.filter(p => group.value === "all" || p.category === group.value).map((p) => (
               <li key={p.id}>
                 <div className="project-info">
-                  <a className="project-title" href={p.link} target="_blank" rel="noopener noreferrer">{p.name} ↗</a>
+                  <a className="project-title" href={p.link} target="_blank" rel="noopener noreferrer">{p.name}</a>
                   <div className="project-links">
                     <a href={p.link} target="_blank" rel="noopener noreferrer">{new URL(p.link).hostname}</a>
-                    {p.github && <a href={p.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+                    {p.github && <a href={p.github} target="_blank" rel="noopener noreferrer">GitHub</a>}
                   </div>
                   <p>{p.description}</p>
                   <div className="project-tags">{(p.tags ?? []).map(t => <span key={t}>{t}</span>)}</div>
